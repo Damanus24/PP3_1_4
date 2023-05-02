@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.security.models.Role;
 import ru.kata.spring.security.models.User;
 import ru.kata.spring.security.security.UserUserDetailsImpl;
+import ru.kata.spring.security.services.UserService;
 import ru.kata.spring.security.services.UserServiceImpl;
 import javax.validation.Valid;
 import java.security.Principal;
@@ -19,10 +20,10 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @Autowired
-    public AdminController(UserServiceImpl userService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
     }
 
@@ -70,7 +71,7 @@ public class AdminController {
     }
 
     @PatchMapping( "/edit/{id}")
-    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
+    public String updateUser(@ModelAttribute("user") User user) {
         userService.updateUser(user);
         return "redirect:/admin/users";
     }
